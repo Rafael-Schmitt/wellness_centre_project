@@ -18,10 +18,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key-for-developme
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
-
+ALLOWED_HOSTS = ['*']
 # Add your Railway domain when you know it
-RAILWAY_STATIC_URL = os.environ.get('RAILWAY_STATIC_URL', '')
+RAILWAY_STATIC_URL = os.environ.get('RAILWAY_STATIC_URL')
 
 if RAILWAY_STATIC_URL:
     ALLOWED_HOSTS.append(RAILWAY_STATIC_URL)
@@ -36,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'centre.apps.CentreConfig',    # Our wellness centre app
+    'centre',    # Our wellness centre app
 ]
 
 MIDDLEWARE = [
@@ -55,7 +54,7 @@ ROOT_URLCONF = 'wellness_centre.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,12 +71,14 @@ WSGI_APPLICATION = 'wellness_centre.wsgi.application'
 
 # Database
 # Use PostgreSQL on Railway, SQLite locally
+# Database configuration for Railway
 if 'DATABASE_URL' in os.environ:
     DATABASES = {
         'default': dj_database_url.config(
             default=os.environ.get('DATABASE_URL'),
             conn_max_age=600,
             conn_health_checks=True,
+            ssl_require=True
         )
     }
 else:
@@ -87,7 +88,6 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
