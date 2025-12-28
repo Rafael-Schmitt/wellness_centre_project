@@ -20,7 +20,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['*']
 # Add your Railway domain when you know it
-RAILWAY_STATIC_URL = os.environ.get('RAILWAY_STATIC_URL')
+RAILWAY_STATIC_URL = os.environ.get('https://wellnesscentreproject-production.up.railway.app/')
 
 if RAILWAY_STATIC_URL:
     ALLOWED_HOSTS.append(RAILWAY_STATIC_URL)
