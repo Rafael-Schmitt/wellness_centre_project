@@ -26,6 +26,8 @@ RAILWAY_STATIC_URL = os.environ.get('RAILWAY_STATIC_URL', '')
 if RAILWAY_STATIC_URL:
     ALLOWED_HOSTS.append(RAILWAY_STATIC_URL)
 
+AUTH_USER_MODEL = 'centre.User'
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -34,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'centre',  # Our wellness centre app
+    'centre.apps.CentreConfig',    # Our wellness centre app
 ]
 
 MIDDLEWARE = [
@@ -132,3 +134,5 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000  # 1 year
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+
+ # In settings.py

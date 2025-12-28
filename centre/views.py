@@ -10,12 +10,12 @@ def home(request):
     return render(request, 'centre/index.html')
 
 def about(request):
-    """Render about page - can extend later"""
-    return render(request, 'centre/index.html#about')
+    """Render about page"""
+    return render(request, 'centre/about.html')
 
 def services(request):
-    """Render services page - can extend later"""
-    return render(request, 'centre/index.html#services')
+    """Render services page"""
+    return render(request, 'centre/services.html')
 
 @csrf_exempt
 def submit_contact(request):
@@ -59,4 +59,3 @@ def submit_contact(request):
     
     # If not POST request, redirect to home
     return redirect('home')
-# Create your views here.
