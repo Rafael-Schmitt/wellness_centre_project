@@ -1,39 +1,32 @@
+"""
+Railway-specific Django settings
+"""
 import os
 
-# Railway-specific database settings
-def get_railway_db_config():
-    if 'DATABASE_URL' not in os.environ:
-        return None
+def update_django_settings():
+    """Update Django settings for Railway deployment"""
     
-    db_url = os.environ['DATABASE_URL']
+    # Import Django settings
+    from django.conf import settings
     
-    # Parse the URL
-    from urllib.parse import urlparse
-    result = urlparse(db_url)
+    # Update ALLOWED_HOSTS for Railway
+    railway_domain = os.environ.get('RAILWAY_PUBLIC_DOMAIN', '')
     
-    config = {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': result.path[1:],
-        'USER': result.username,
-        'PASSWORD': result.password,
-        'HOST': result.hostname,
-        'PORT': result.port,
-        'CONN_MAX_AGE': 600,
-    }
+    if railway_domain:
+        # Add the Railway domain
+        if railway_domain not in settings.ALLOWED_HOSTS:
+            settings.ALLOWED_HOSTS.append(railway_domain)
+        
+        # Also add the base domain without any port
+        base_domain = railway_domain.split(':')[0]
+        if base_domain not in settings.ALLOWED_HOSTS:
+            settings.ALLOWED_HOSTS.append(base_domain)
     
-    # Handle SSL - use connection string approach
-    query_params = {}
-    if result.query:
-        from urllib.parse import parse_qs
-        query_params = parse_qs(result.query)
+    # For immediate fix, allow all (remove this in production)
+    print(f"Railway Domain: {railway_domain}")
+    print(f"ALLOWED_HOSTS: {settings.ALLOWED_HOSTS}")
     
-    # Build connection string without sslmode in Django config
-    # Let psycopg2 handle it through the URL
-    return config
+    return settings
 
-# Update settings
-import wellness_centre.settings as settings
-
-db_config = get_railway_db_config()
-if db_config:
-    settings.DATABASES['default'] = db_config
+# Call the function to update settings
+update_django_settings()
