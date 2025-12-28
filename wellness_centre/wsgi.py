@@ -3,8 +3,10 @@ from django.core.wsgi import get_wsgi_application
 
 # Apply Railway settings before loading Django
 try:
-    from railway_settings import update_django_settings
-    update_django_settings()
+    from dj_database_url import config as db_config
+    DATABASES = {
+        'default': db_config(default=os.environ.get('DATABASE_URL'))
+    }   
 except ImportError:
     pass
 
