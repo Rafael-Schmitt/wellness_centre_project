@@ -123,7 +123,7 @@ nav ul li a:hover::after {
 /* Hero Section */
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(42, 97, 113, 0.7), rgba(42, 97, 113, 0.4)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');
+    background: linear-gradient(rgba(42, 97, 113, 0.7), rgba(42, 97, 113, 0.4)), url('https://www.viajali.com.br/wp-content/uploads/2023/04/santo-amaro-da-imperatriz-730x449.png');
     background-size: cover;
     background-position: center;
     display: flex;
